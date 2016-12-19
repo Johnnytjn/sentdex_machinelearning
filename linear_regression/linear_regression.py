@@ -4,18 +4,57 @@ from statistics import mean
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-
-# Convert CSV stuff into pandas dataframe
-df = pd.read_csv("x_and_y_vals.csv", names=["x_vals", "y_vals"])
-
-# Convert pandas dataframe into float64 np arrays
-x_arr = df["x_vals"].astype("float64").values
-y_arr = df["y_vals"].astype("float64").values
-
-def best_fit_slope(x_vals, y_vals):
-    # Lots of ()'s but is just (top) / (bot)
-    slope = (((mean(x_vals) * mean(y_vals)) - mean(x_vals * y_vals)) /
-             (mean(x_vals) ** 2 - mean(x_vals ** 2)))
+from matplotlib import style
 
 
-m = best_fit_slope(x_arr, y_arr)
+def main():
+    # Convert CSV stuff into pandas dataframe
+    df = pd.read_csv("x_and_y_vals.csv", names=["miles", "time"])
+
+    # Convert pandas dataframe into float64 numpy arrays
+    miles_driven = df["miles"].astype("float64").values
+    time_taken = df["time"].astype("float64").values
+
+    # Tuple of m and b ----> (y=mx+b)
+    m, b = best_fit_slope_and_intercept(miles_driven, time_taken)
+    regression_line_and_graph(miles_driven, time_taken, m, b)
+
+
+def best_fit_slope_and_intercept(x_vals, y_vals):
+    """Find slope and intercept for x and y vals"""
+    # Find means
+    x_mean = mean(x_vals)
+    y_mean = mean(y_vals)
+    xy_mean = mean(x_vals * y_vals)
+
+    # (xavg*yavg - xyavg) / (xavg^2 - (x^2)avg)
+    slope = ((x_mean * y_mean) - xy_mean) / (x_mean ** 2 - mean(x_vals ** 2))
+    intercept = y_mean - slope * x_mean
+    return slope, intercept
+
+
+def regression_line_and_graph(x_vals, y_vals, m, b):
+    # y=mx+b
+    regression_line = [(m * x + b) for x in x_vals]
+
+    # average speed in mph
+    avg_speed = m * 60
+
+    # Style, Title & Axis Labels
+    style.use("dark_background")
+    plt.suptitle("Avg. Speed: {num: .{dig}f} mph".format(num=avg_speed, dig=1))
+    plt.xlabel("Distance Driven (miles)")
+    plt.ylabel("Time Taken (minutes)")
+
+    # Plot
+    plt.scatter(x_vals, y_vals)
+    plt.plot(x_vals, regression_line)
+
+    # Display
+    # plt.show()
+    # Save png
+    plt.savefig("regression.png", bbox_inches="tight")
+
+
+if __name__ == '__main__':
+    main()
