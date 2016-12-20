@@ -10,19 +10,19 @@ def create_dataset(ds_size, variance, step=2, correlation=False):
     val = 1
     ys = []
     for i in range(ds_size):
-        # No neg variance because can't have negative time
-        y = val + random.randrange(variance)
+        y = val + random.randrange(-variance, variance)
         ys.append(y)
-        # No neg correlation because can't have negative time
         if correlation == "pos":
             val += step
+        elif correlation == "neg":
+            val -= step
     xs = [i for i in range(len(ys))]
     return np.array(xs, dtype=np.float64), np.array(ys, dtype=np.float64)
 
 
 def main():
     # Change these values for testing
-    xs, ys = create_dataset(50, 15, 1, "pos")
+    xs, ys = create_dataset(40, 10, 1, "pos")
 
     # Find (y=mx+b)
     m, b = m_and_b(xs, ys)

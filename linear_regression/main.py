@@ -9,11 +9,11 @@ from regression_tools import make_graph
 
 def main():
     # Convert CSV stuff into pandas dataframe
-    df = pd.read_csv("data/x_and_y_vals.csv", names=["miles", "time"])
+    df = pd.read_csv("data/x_and_y_vals.csv", names=["x", "y"])
 
     # Convert pandas dataframe into float64 numpy arrays
-    x_vals = df["miles"].astype("float64").values
-    y_vals = df["time"].astype("float64").values
+    x_vals = df["x"].astype("float64").values
+    y_vals = df["y"].astype("float64").values
 
     # Tuple of m and b ----> (y=mx+b)
     m, b = m_and_b(x_vals, y_vals)
