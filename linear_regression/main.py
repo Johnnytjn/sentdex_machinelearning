@@ -25,8 +25,11 @@ def main():
     r_squared = coefficient_of_determination(y_vals, regression_line)
     print("Coefficient of Determination: ", r_squared, sep='')
 
+    # Where to save the graph?
+    vis_loc = "visuals/regression.png"
+
     # Graph it
-    make_graph(x_vals, y_vals, m, b, regression_line)
+    make_graph(x_vals, y_vals, m, b, regression_line, vis_loc)
 
 
 if __name__ == '__main__':

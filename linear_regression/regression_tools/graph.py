@@ -3,7 +3,7 @@
 import matplotlib.pyplot as plt
 from matplotlib import style
 
-def make_graph(x_vals, y_vals, m, b, regression_line):
+def make_graph(x_vals, y_vals, m, b, regression_line, vis_loc):
 
     # average speed in mph
     avg_speed = m * 60
@@ -32,4 +32,4 @@ def make_graph(x_vals, y_vals, m, b, regression_line):
     # Display
     # plt.show()
     # Save png
-    plt.savefig("visuals/regression.png", bbox_inches="tight")
+    plt.savefig(vis_loc, bbox_inches="tight")
