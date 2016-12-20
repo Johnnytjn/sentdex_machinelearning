@@ -3,9 +3,7 @@
 import matplotlib.pyplot as plt
 from matplotlib import style
 
-def make_graph(x_vals, y_vals, m, b):
-    # y=mx+b
-    regression_line = [(m * x + b) for x in x_vals]
+def make_graph(x_vals, y_vals, m, b, regression_line):
 
     # average speed in mph
     avg_speed = m * 60
